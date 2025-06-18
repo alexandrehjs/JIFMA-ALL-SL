@@ -28,40 +28,40 @@ def login():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@auth_bp.route('/register', methods=['POST'])
-def register():
-    try:
-        data = request.get_json()
-        username = data.get('username')
-        email = data.get('email')
-        password = data.get('password')
-        is_admin = data.get('is_admin', False)
-        
-        if not username or not email or not password:
-            return jsonify({'error': 'Username, email e password são obrigatórios'}), 400
-        
-        # Verificar se usuário já existe
-        if User.query.filter_by(username=username).first():
-            return jsonify({'error': 'Username já existe'}), 400
-        
-        if User.query.filter_by(email=email).first():
-            return jsonify({'error': 'Email já existe'}), 400
-        
-        # Criar novo usuário
-        user = User(username=username, email=email, is_admin=is_admin)
-        user.set_password(password)
-        
-        db.session.add(user)
-        db.session.commit()
-        
-        return jsonify({
-            'message': 'Usuário criado com sucesso',
-            'user': user.to_dict()
-        }), 201
-        
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+# @auth_bp.route('/register', methods=['POST'])
+# def register():
+#     try:
+#         data = request.get_json()
+#         username = data.get('username')
+#         email = data.get('email')
+#         password = data.get('password')
+#         is_admin = data.get('is_admin', False)
+#
+#         if not username or not email or not password:
+#             return jsonify({'error': 'Username, email e password são obrigatórios'}), 400
+#
+#         # Verificar se usuário já existe
+#         if User.query.filter_by(username=username).first():
+#             return jsonify({'error': 'Username já existe'}), 400
+#
+#         if User.query.filter_by(email=email).first():
+#             return jsonify({'error': 'Email já existe'}), 400
+#
+#         # Criar novo usuário
+#         user = User(username=username, email=email, is_admin=is_admin)
+#         user.set_password(password)
+#
+#         db.session.add(user)
+#         db.session.commit()
+#
+#         return jsonify({
+#             'message': 'Usuário criado com sucesso',
+#             'user': user.to_dict()
+#         }), 201
+#
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({'error': str(e)}), 500
 
 @auth_bp.route('/profile', methods=['GET'])
 @jwt_required()

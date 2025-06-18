@@ -8,15 +8,12 @@ const Results = () => {
   const [error, setError] = useState('')
   const [selectedSport, setSelectedSport] = useState('all')
 
-  const sports = [
+  const sportsDefault = [
     { id: 'all', name: 'Todas as Modalidades' },
-    { id: 'futsal', name: 'Futsal' },
-    { id: 'futebol_campo', name: 'Futebol de Campo' },
-    { id: 'volei_praia', name: 'Vôlei de Praia' },
-    { id: 'volei_quadra', name: 'Vôlei de Quadra' },
-    { id: 'handebol', name: 'Handebol' },
-    { id: 'basquete', name: 'Basquete' }
   ]
+
+  const [sports, setSports] = useState([sportsDefault])
+
 
   useEffect(() => {
     fetchGames()
@@ -26,102 +23,18 @@ const Results = () => {
     try {
       setLoading(true)
       const response = await axios.get('http://localhost:5000/api/games')
+      const sportResponse = await axios.get('http://localhost:5000/api/sports')
+      const newSports = sportResponse.data.map((item) => ({
+        'id': item.name.toLowerCase(),
+        'name': item.name
+      }))
+      console.log(newSports)
+      setSports([...sportsDefault, ...newSports])
       setGames(response.data)
       setError('')
     } catch (error) {
       console.error('Erro ao carregar jogos:', error)
-      // Fallback para dados mock se a API não estiver disponível
-      setGames([
-        {
-          game_id: '1',
-          sport_name: 'Futsal',
-          team1_name: 'Informática',
-          team2_name: 'Edificações',
-          team1_score: 4,
-          team2_score: 2,
-          game_date: '2024-12-15T14:00:00',
-          location: 'Ginásio Principal',
-          status: 'finalizado'
-        },
-        {
-          game_id: '2',
-          sport_name: 'Basquete',
-          team1_name: 'Agropecuária',
-          team2_name: 'Administração',
-          team1_score: 78,
-          team2_score: 65,
-          game_date: '2024-12-15T16:00:00',
-          location: 'Quadra Externa',
-          status: 'finalizado'
-        },
-        {
-          game_id: '3',
-          sport_name: 'Vôlei de Quadra',
-          team1_name: 'Informática',
-          team2_name: 'Agropecuária',
-          team1_score: 3,
-          team2_score: 1,
-          game_date: '2024-12-14T10:00:00',
-          location: 'Ginásio Principal',
-          status: 'finalizado'
-        },
-        {
-          game_id: '4',
-          sport_name: 'Handebol',
-          team1_name: 'Administração',
-          team2_name: 'Edificações',
-          team1_score: 25,
-          team2_score: 22,
-          game_date: '2024-12-14T14:00:00',
-          location: 'Quadra Externa',
-          status: 'finalizado'
-        },
-        {
-          game_id: '5',
-          sport_name: 'Futsal',
-          team1_name: 'Agropecuária',
-          team2_name: 'Administração',
-          team1_score: 3,
-          team2_score: 1,
-          game_date: '2024-12-16T15:00:00',
-          location: 'Ginásio Principal',
-          status: 'finalizado'
-        },
-        {
-          game_id: '6',
-          sport_name: 'Vôlei de Praia',
-          team1_name: 'Informática',
-          team2_name: 'Edificações',
-          team1_score: 2,
-          team2_score: 0,
-          game_date: '2024-12-16T09:00:00',
-          location: 'Quadra de Areia',
-          status: 'finalizado'
-        },
-        {
-          game_id: '7',
-          sport_name: 'Basquete',
-          team1_name: 'Informática',
-          team2_name: 'Edificações',
-          team1_score: 0,
-          team2_score: 0,
-          game_date: '2024-12-17T16:00:00',
-          location: 'Quadra Externa',
-          status: 'agendado'
-        },
-        {
-          game_id: '8',
-          sport_name: 'Handebol',
-          team1_name: 'Agropecuária',
-          team2_name: 'Informática',
-          team1_score: 0,
-          team2_score: 0,
-          game_date: '2024-12-17T18:00:00',
-          location: 'Ginásio Principal',
-          status: 'agendado'
-        }
-      ])
-      setError('Conectado aos dados locais (API indisponível)')
+      setError('Erro ao carregar os dados, tente recarregar a página!')
     } finally {
       setLoading(false)
     }
@@ -140,11 +53,11 @@ const Results = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'finalizado':
+      case 'Finalizado':
         return 'bg-green-100 text-green-800'
-      case 'em_andamento':
+      case 'Em Andamento':
         return 'bg-blue-100 text-blue-800'
-      case 'agendado':
+      case 'Agendado':
         return 'bg-yellow-100 text-yellow-800'
       default:
         return 'bg-gray-100 text-gray-800'
@@ -153,20 +66,20 @@ const Results = () => {
 
   const getStatusText = (status) => {
     switch (status) {
-      case 'finalizado':
+      case 'Finalizado':
         return 'Finalizado'
-      case 'em_andamento':
+      case 'Em Andamento':
         return 'Em Andamento'
-      case 'agendado':
+      case 'Agendado':
         return 'Agendado'
       default:
         return 'Indefinido'
     }
   }
 
-  const filteredGames = selectedSport === 'all' 
-    ? games 
-    : games.filter(game => game.sport_name?.toLowerCase().replace(/\s+/g, '_').replace('ô', 'o') === selectedSport)
+  const filteredGames = selectedSport === 'all'
+    ? games
+    : games.filter(game => game.sport_name?.toLowerCase() === selectedSport)
 
   if (loading) {
     return (
@@ -254,10 +167,10 @@ const Results = () => {
                     <div className="text-center flex-1">
                       <div className="flex items-center justify-center space-x-2 mb-2">
                         <Users className="h-4 w-4 text-gray-600" />
-                        <span className="font-medium text-gray-900">{game.team1_name}</span>
+                        <span className="font-medium text-gray-900">{game.team_a_name}</span>
                       </div>
                       <div className="text-2xl font-bold text-blue-600">
-                        {game.status === 'finalizado' ? game.team1_score : '-'}
+                        {game.status === 'Finalizado' || game.status === 'Em Andamento' ? game.score_a : '-'}
                       </div>
                     </div>
 
@@ -268,10 +181,10 @@ const Results = () => {
                     <div className="text-center flex-1">
                       <div className="flex items-center justify-center space-x-2 mb-2">
                         <Users className="h-4 w-4 text-gray-600" />
-                        <span className="font-medium text-gray-900">{game.team2_name}</span>
+                        <span className="font-medium text-gray-900">{game.team_b_name}</span>
                       </div>
                       <div className="text-2xl font-bold text-blue-600">
-                        {game.status === 'finalizado' ? game.team2_score : '-'}
+                        {game.status === 'Finalizado' || game.status === 'Em Andamento' ? game.score_b : '-'}
                       </div>
                     </div>
                   </div>

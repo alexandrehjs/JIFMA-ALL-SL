@@ -1,0 +1,4 @@
+jifma-web/node_modules
+jifma-api/.venv
+**/__pycache__/
+.idea

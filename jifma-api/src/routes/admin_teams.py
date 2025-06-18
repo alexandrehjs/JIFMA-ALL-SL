@@ -119,6 +119,7 @@ def create_sport():
         data = request.get_json()
         name = data.get('name')
         description = data.get('description')
+        type = data.get("type")
         
         if not name:
             return jsonify({'error': 'Nome da modalidade é obrigatório'}), 400
@@ -129,7 +130,8 @@ def create_sport():
         
         sport = Sport(
             name=name,
-            description=description
+            description=description,
+            type=type
         )
         
         db.session.add(sport)
@@ -166,6 +168,9 @@ def update_sport(sport_id):
         
         if 'description' in data:
             sport.description = data['description']
+
+        if 'type' in data:
+            sport.type = data['type']
         
         db.session.commit()
         

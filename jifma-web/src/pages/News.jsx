@@ -20,57 +20,6 @@ const News = () => {
       setError('')
     } catch (error) {
       console.error('Erro ao carregar notícias:', error)
-      // Fallback para dados mock se a API não estiver disponível
-      setNews([
-        {
-          news_id: '1',
-          title: 'Abertura dos Jogos JIFMA 2024',
-          content: 'A cerimônia de abertura dos Jogos Internos do IFMA Campus Caxias aconteceu com grande sucesso, marcando o início de uma semana repleta de competições esportivas entre os cursos técnicos.',
-          author: 'Coordenação JIFMA',
-          created_at: '2024-12-15T08:00:00',
-          image_url: null
-        },
-        {
-          news_id: '2',
-          title: 'Informática vence primeira partida de Futsal',
-          content: 'A equipe do curso de Informática estreou com vitória nos jogos de futsal, vencendo a equipe de Edificações por 4 a 2 em partida emocionante no ginásio principal.',
-          author: 'Redação JIFMA',
-          created_at: '2024-12-15T14:30:00',
-          image_url: null
-        },
-        {
-          news_id: '3',
-          title: 'Basquete: Agropecuária surpreende e vence Administração',
-          content: 'Em jogo disputado ponto a ponto, a equipe de Agropecuária conseguiu uma vitória importante sobre Administração por 78 a 65, mostrando grande evolução técnica.',
-          author: 'Redação JIFMA',
-          created_at: '2024-12-15T16:45:00',
-          image_url: null
-        },
-        {
-          news_id: '4',
-          title: 'Vôlei de Quadra: Informática mantém invencibilidade',
-          content: 'A equipe de Informática venceu mais uma partida no vôlei de quadra, desta vez contra Agropecuária por 3 sets a 1, mantendo-se na liderança da modalidade.',
-          author: 'Redação JIFMA',
-          created_at: '2024-12-14T10:15:00',
-          image_url: null
-        },
-        {
-          news_id: '5',
-          title: 'Handebol: Administração conquista primeira vitória',
-          content: 'Após duas derrotas consecutivas, a equipe de Administração conseguiu sua primeira vitória no handebol, vencendo Edificações por 25 a 22 em partida equilibrada.',
-          author: 'Redação JIFMA',
-          created_at: '2024-12-14T14:20:00',
-          image_url: null
-        },
-        {
-          news_id: '6',
-          title: 'Programação do final de semana definida',
-          content: 'A coordenação dos jogos divulgou a programação completa do final de semana, com destaque para as finais de algumas modalidades que acontecerão no domingo.',
-          author: 'Coordenação JIFMA',
-          created_at: '2024-12-13T18:00:00',
-          image_url: null
-        }
-      ])
       setError('Conectado aos dados locais (API indisponível)')
     } finally {
       setLoading(false)
@@ -161,7 +110,7 @@ const News = () => {
                     </div>
                     <div className="flex items-center space-x-1">
                       <Clock className="h-4 w-4" />
-                      <span>{formatDate(item.created_at)}</span>
+                      <span>{formatDate(item.publication_date)}</span>
                     </div>
                   </div>
                 </div>
@@ -174,7 +123,7 @@ const News = () => {
           <div className="text-center py-12">
             <Newspaper className="h-16 w-16 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500 text-lg">
-              Nenhuma notícia encontrada para "{searchTerm}".
+              Nenhuma notícia encontrada{searchTerm.trim().length === 0 ? null : " para " + '"' + searchTerm + '"'}.
             </p>
           </div>
         )}

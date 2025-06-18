@@ -14,7 +14,7 @@ from models.games import Game
 from models.medals import MedalStanding
 
 # Import blueprints
-from routes.user import user_bp
+from routes.admin_users import user_bp
 from routes.news import news_bp
 from routes.sports import sports_bp
 from routes.teams import teams_bp
