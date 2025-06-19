@@ -115,10 +115,10 @@ def update_game(game_id):
             game.status = data['status']
         
         if 'score_a' in data:
-            game.score_a = data['score_a']
-        
+            game.score_a = str(data['score_a'])
+
         if 'score_b' in data:
-            game.score_b = data['score_b']
+            game.score_b = str(data['score_b'])
         
         # Determinar vencedor se ambos os placares estão definidos
         if game.score_a is not None and game.score_b is not None:

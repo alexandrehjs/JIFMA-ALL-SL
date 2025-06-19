@@ -19,42 +19,7 @@ const Medals = () => {
       setError('')
     } catch (error) {
       console.error('Erro ao carregar quadro de medalhas:', error)
-      // Fallback para dados mock se a API não estiver disponível
-      setStandings([
-        {
-          team_id: '1',
-          team_name: 'Informática',
-          gold_medals: 3,
-          silver_medals: 1,
-          bronze_medals: 2,
-          total_medals: 6
-        },
-        {
-          team_id: '2',
-          team_name: 'Agropecuária',
-          gold_medals: 2,
-          silver_medals: 2,
-          bronze_medals: 1,
-          total_medals: 5
-        },
-        {
-          team_id: '3',
-          team_name: 'Administração',
-          gold_medals: 1,
-          silver_medals: 2,
-          bronze_medals: 2,
-          total_medals: 5
-        },
-        {
-          team_id: '4',
-          team_name: 'Edificações',
-          gold_medals: 0,
-          silver_medals: 1,
-          bronze_medals: 1,
-          total_medals: 2
-        }
-      ])
-      setError('Conectado aos dados locais (API indisponível)')
+      setError('Erro ao carregar quadro de medalhas, reinicie a página!')
     } finally {
       setLoading(false)
     }
@@ -116,7 +81,7 @@ const Medals = () => {
             Quadro de Medalhas
           </h1>
           <p className="text-xl text-gray-600">
-            Classificação geral das equipes no JIFMA 2024
+            Classificação geral das equipes no JIFMA Polo 3 2025
           </p>
         </div>
 

@@ -27,14 +27,16 @@ const News = () => {
   }
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('pt-BR', {
+    const date = new Date(dateString + "Z")
+    return date.toLocaleString('pt-BR', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
-    })
+      minute: '2-digit',
+      hour12: false,
+      timeZone: 'America/Sao_Paulo'
+    });
   }
 
   const filteredNews = news.filter(item =>

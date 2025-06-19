@@ -19,7 +19,7 @@ from routes.news import news_bp
 from routes.sports import sports_bp
 from routes.teams import teams_bp
 from routes.games import games_bp
-from routes.medals import medals_bp
+from routes.admin_medals import medals_bp
 from routes.auth import auth_bp
 from routes.admin_news import admin_news_bp
 from routes.admin_games import admin_games_bp

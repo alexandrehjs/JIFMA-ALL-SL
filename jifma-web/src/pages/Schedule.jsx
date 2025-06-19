@@ -9,21 +9,17 @@ const Schedule = () => {
   const [selectedSport, setSelectedSport] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('all')
 
-  const sports = [
-    { id: 'all', name: 'Todas as Modalidades' },
-    { id: 'futsal', name: 'Futsal' },
-    { id: 'futebol_campo', name: 'Futebol de Campo' },
-    { id: 'volei_praia', name: 'Vôlei de Praia' },
-    { id: 'volei_quadra', name: 'Vôlei de Quadra' },
-    { id: 'handebol', name: 'Handebol' },
-    { id: 'basquete', name: 'Basquete' }
+  const sportsDefault = [
+    { id: 'all', name: 'Todas as Modalidades' }
   ]
+
+  const [sports, setSports] = useState(sportsDefault)
 
   const statusOptions = [
     { id: 'all', name: 'Todos os Status' },
-    { id: 'agendado', name: 'Agendados' },
-    { id: 'em_andamento', name: 'Em Andamento' },
-    { id: 'finalizado', name: 'Finalizados' }
+    { id: 'Agendado', name: 'Agendados' },
+    { id: 'Em Andamento', name: 'Em Andamento' },
+    { id: 'Finalizado', name: 'Finalizados' }
   ]
 
   useEffect(() => {
@@ -34,124 +30,17 @@ const Schedule = () => {
     try {
       setLoading(true)
       const response = await axios.get('http://localhost:5000/api/games')
+      const sportResponse = await axios.get('http://localhost:5000/api/sports')
+      const newSports = sportResponse.data.map((item) => ({
+        'id': item.name.toLowerCase(),
+        'name': item.name
+      }))
+      setSports([...sportsDefault, ...newSports])
       setGames(response.data)
       setError('')
     } catch (error) {
       console.error('Erro ao carregar jogos:', error)
-      // Fallback para dados mock se a API não estiver disponível
-      setGames([
-        {
-          game_id: '1',
-          sport_name: 'Futsal',
-          team1_name: 'Informática',
-          team2_name: 'Edificações',
-          team1_score: 4,
-          team2_score: 2,
-          game_date: '2024-12-15T14:00:00',
-          location: 'Ginásio Principal',
-          status: 'finalizado'
-        },
-        {
-          game_id: '2',
-          sport_name: 'Basquete',
-          team1_name: 'Agropecuária',
-          team2_name: 'Administração',
-          team1_score: 78,
-          team2_score: 65,
-          game_date: '2024-12-15T16:00:00',
-          location: 'Quadra Externa',
-          status: 'finalizado'
-        },
-        {
-          game_id: '3',
-          sport_name: 'Vôlei de Quadra',
-          team1_name: 'Informática',
-          team2_name: 'Agropecuária',
-          team1_score: 3,
-          team2_score: 1,
-          game_date: '2024-12-14T10:00:00',
-          location: 'Ginásio Principal',
-          status: 'finalizado'
-        },
-        {
-          game_id: '4',
-          sport_name: 'Handebol',
-          team1_name: 'Administração',
-          team2_name: 'Edificações',
-          team1_score: 25,
-          team2_score: 22,
-          game_date: '2024-12-14T14:00:00',
-          location: 'Quadra Externa',
-          status: 'finalizado'
-        },
-        {
-          game_id: '5',
-          sport_name: 'Futsal',
-          team1_name: 'Agropecuária',
-          team2_name: 'Administração',
-          team1_score: 3,
-          team2_score: 1,
-          game_date: '2024-12-16T15:00:00',
-          location: 'Ginásio Principal',
-          status: 'finalizado'
-        },
-        {
-          game_id: '6',
-          sport_name: 'Vôlei de Praia',
-          team1_name: 'Informática',
-          team2_name: 'Edificações',
-          team1_score: 2,
-          team2_score: 0,
-          game_date: '2024-12-16T09:00:00',
-          location: 'Quadra de Areia',
-          status: 'finalizado'
-        },
-        {
-          game_id: '7',
-          sport_name: 'Basquete',
-          team1_name: 'Informática',
-          team2_name: 'Edificações',
-          team1_score: 0,
-          team2_score: 0,
-          game_date: '2024-12-17T16:00:00',
-          location: 'Quadra Externa',
-          status: 'agendado'
-        },
-        {
-          game_id: '8',
-          sport_name: 'Handebol',
-          team1_name: 'Agropecuária',
-          team2_name: 'Informática',
-          team1_score: 0,
-          team2_score: 0,
-          game_date: '2024-12-17T18:00:00',
-          location: 'Ginásio Principal',
-          status: 'agendado'
-        },
-        {
-          game_id: '9',
-          sport_name: 'Futebol de Campo',
-          team1_name: 'Administração',
-          team2_name: 'Agropecuária',
-          team1_score: 0,
-          team2_score: 0,
-          game_date: '2024-12-18T14:00:00',
-          location: 'Campo de Futebol',
-          status: 'agendado'
-        },
-        {
-          game_id: '10',
-          sport_name: 'Vôlei de Quadra',
-          team1_name: 'Edificações',
-          team2_name: 'Administração',
-          team1_score: 0,
-          team2_score: 0,
-          game_date: '2024-12-18T16:00:00',
-          location: 'Ginásio Principal',
-          status: 'agendado'
-        }
-      ])
-      setError('Conectado aos dados locais (API indisponível)')
+      setError('Erro ao carregar os dados, tente recarregar a página!')
     } finally {
       setLoading(false)
     }
@@ -174,11 +63,11 @@ const Schedule = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'finalizado':
+      case 'Finalizado':
         return 'bg-green-100 text-green-800 border-green-200'
-      case 'em_andamento':
+      case 'Em Andamento':
         return 'bg-blue-100 text-blue-800 border-blue-200'
-      case 'agendado':
+      case 'Agendado':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200'
@@ -187,11 +76,11 @@ const Schedule = () => {
 
   const getStatusText = (status) => {
     switch (status) {
-      case 'finalizado':
+      case 'Finalizado':
         return 'Finalizado'
-      case 'em_andamento':
+      case 'Em Andamento':
         return 'Em Andamento'
-      case 'agendado':
+      case 'Agendado':
         return 'Agendado'
       default:
         return 'Indefinido'
@@ -200,7 +89,7 @@ const Schedule = () => {
 
   const filteredGames = games.filter(game => {
     const sportMatch = selectedSport === 'all' || 
-      game.sport_name?.toLowerCase().replace(/\s+/g, '_').replace('ô', 'o') === selectedSport
+      game.sport_name?.toLowerCase() === selectedSport
     const statusMatch = selectedStatus === 'all' || game.status === selectedStatus
     return sportMatch && statusMatch
   })
@@ -241,7 +130,7 @@ const Schedule = () => {
             Tabela de Jogos
           </h1>
           <p className="text-xl text-gray-600">
-            Cronograma completo dos jogos do JIFMA 2024
+            Cronograma completo dos jogos do JIFMA Polo 3 2025
           </p>
         </div>
 
@@ -339,9 +228,9 @@ const Schedule = () => {
 
                           <div className="flex items-center justify-between bg-gray-50 rounded-lg p-4">
                             <div className="text-center flex-1">
-                              <div className="font-medium text-gray-900 mb-2">{game.team1_name}</div>
+                              <div className="font-medium text-gray-900 mb-2">{game.team_a_name}</div>
                               <div className="text-2xl font-bold text-blue-600">
-                                {game.status === 'finalizado' ? game.team1_score : '-'}
+                                {game.status.toLowerCase() === 'finalizado' || game.status.toLowerCase() === 'em andamento' ? game.score_a : '-'}
                               </div>
                             </div>
 
@@ -350,9 +239,9 @@ const Schedule = () => {
                             </div>
 
                             <div className="text-center flex-1">
-                              <div className="font-medium text-gray-900 mb-2">{game.team2_name}</div>
+                              <div className="font-medium text-gray-900 mb-2">{game.team_b_name}</div>
                               <div className="text-2xl font-bold text-blue-600">
-                                {game.status === 'finalizado' ? game.team2_score : '-'}
+                                {game.status.toLowerCase() === 'finalizado'  || game.status.toLowerCase() === 'em andamento'  ? game.score_b : '-'}
                               </div>
                             </div>
                           </div>
