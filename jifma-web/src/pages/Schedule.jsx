@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Calendar, Clock, MapPin, Users, Filter } from 'lucide-react'
 import axios from 'axios'
+import api from '@/config/api'
 
 const Schedule = () => {
   const [games, setGames] = useState([])
@@ -29,8 +30,8 @@ const Schedule = () => {
   const fetchGames = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('http://localhost:5000/api/games')
-      const sportResponse = await axios.get('http://localhost:5000/api/sports')
+      const response = await axios.get(`${api.baseURL}/api/games`)
+      const sportResponse = await axios.get(`${api.baseURL}/api/sports`)
       const newSports = sportResponse.data.map((item) => ({
         'id': item.name.toLowerCase(),
         'name': item.name

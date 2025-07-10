@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Shield, User, Lock, AlertCircle, CheckCircle } from 'lucide-react'
 import axios from 'axios'
+import api from '@/config/api'
 
 const Login = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({
@@ -18,7 +19,7 @@ const Login = ({ onLogin }) => {
     setSuccess('')
 
     try {
-      const response = await axios.post('http://localhost:5000/api/login', credentials)
+      const response = await axios.post(`${api.baseURL}/api/login`, credentials)
       
       if (response.data.access_token) {
         localStorage.setItem('jifma_token', response.data.access_token)
@@ -116,14 +117,6 @@ const Login = ({ onLogin }) => {
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
-
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 text-center">
-            <strong>Credenciais padrão:</strong><br />
-            Usuário: admin<br />
-            Senha: admin123
-          </p>
-        </div>
       </div>
     </div>
   )

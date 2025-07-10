@@ -122,6 +122,10 @@ def create_app():
     
     return app
 
+    @app.route('/')
+    def hello_world():
+        return 'Hello, Vercel!'
+
 app = create_app()
 
 if __name__ == '__main__':

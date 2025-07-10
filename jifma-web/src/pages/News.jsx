@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Newspaper, Clock, User, Search } from 'lucide-react'
 import axios from 'axios'
+import api from '@/config/api'
 
 const News = () => {
   const [news, setNews] = useState([])
@@ -15,7 +16,7 @@ const News = () => {
   const fetchNews = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('http://localhost:5000/api/news')
+      const response = await axios.get(`${api.baseURL}/api/news`)
       setNews(response.data)
       setError('')
     } catch (error) {
