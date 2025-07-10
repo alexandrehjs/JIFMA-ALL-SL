@@ -30,10 +30,9 @@ def create_app():
     
     # Configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///jifma.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL', 'sqlite:///jifma.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-secret-string-change-in-production')
-    
     # Initialize extensions
     db.init_app(app)
     CORS(app, origins="*")
@@ -83,7 +82,7 @@ def create_app():
                 email='admin@jifma.com',
                 is_admin=True
             )
-            admin_user.set_password('admin123')
+            admin_user.set_password('admin@123')
             db.session.add(admin_user)
             
             db.session.commit()
