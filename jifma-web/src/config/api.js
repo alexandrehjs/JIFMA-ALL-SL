@@ -1,5 +1,5 @@
 // Configuração da API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://lnh8imcdj15y.manus.space'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://jifma-api.vercel.app'
 
 export const api = {
   baseURL: API_BASE_URL,
