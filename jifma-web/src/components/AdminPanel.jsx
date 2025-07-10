@@ -91,7 +91,7 @@ const AdminPanel = ({ onLogout }) => {
           });
           break;
         case "news":
-          let newsResponse = await axios.get(`${api.baseURL}api/news`);
+          let newsResponse = await axios.get(`${api.baseURL}/api/news`);
           setNews(newsResponse.data);
           break;
         case "games":
