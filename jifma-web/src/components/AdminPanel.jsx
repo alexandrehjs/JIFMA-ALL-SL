@@ -197,7 +197,7 @@ const AdminPanel = ({ onLogout }) => {
           break;
       }
 
-      await axios[method](`localhost:5000${endpoint}`, formData, config);
+      await axios[method](`${api.baseURL}${endpoint}`, formData, config);
 
       showMessage(
         editingItem
@@ -243,7 +243,7 @@ const AdminPanel = ({ onLogout }) => {
           break;
       }
 
-      await axios.delete(`localhost:5000${endpoint}`, config);
+      await axios.delete(`${api.baseURL}${endpoint}`, config);
       showMessage("Item excluído com sucesso!");
       loadData();
     } catch (error) {
