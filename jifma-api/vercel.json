@@ -11,5 +11,10 @@
           "src": "/(.*)",
           "dest": "src/main.py"
         }
-      ]
+      ],
+      "env": {
+        "POSTGRES_URL": "postgresql://default:fB4riJDAPyH5@ep-misty-dew-a4mvheft-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require",
+        "SECRET_KEY": "FmEkPCscZE",
+        "JWT_SECRET_KEY":"3264128256512"
+      }
     }

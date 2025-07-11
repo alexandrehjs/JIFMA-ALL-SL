@@ -1,4 +1,5 @@
 jifma-web/node_modules
 jifma-api/.venv
+jifma-web/dist
 **/__pycache__/
 .idea

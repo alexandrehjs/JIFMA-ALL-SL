@@ -56,27 +56,27 @@ def create_app():
         
         # Initialize default data if tables are empty
         if Sport.query.count() == 0:
-            sports = [
-                Sport(name='Futsal', description='Modalidade de futebol indoor'),
-                Sport(name='Futebol de Campo', description='Futebol tradicional em campo aberto'),
-                Sport(name='Vôlei de Praia', description='Voleibol na areia'),
-                Sport(name='Vôlei de Quadra', description='Voleibol em quadra coberta'),
-                Sport(name='Handebol', description='Esporte coletivo com as mãos'),
-                Sport(name='Basquete', description='Basquetebol em quadra')
-            ]
-            for sport in sports:
-                db.session.add(sport)
+            # sports = [
+            #     Sport(name='Futsal', description='Modalidade de futebol indoor'),
+            #     Sport(name='Futebol de Campo', description='Futebol tradicional em campo aberto'),
+            #     Sport(name='Vôlei de Praia', description='Voleibol na areia'),
+            #     Sport(name='Vôlei de Quadra', description='Voleibol em quadra coberta'),
+            #     Sport(name='Handebol', description='Esporte coletivo com as mãos'),
+            #     Sport(name='Basquete', description='Basquetebol em quadra')
+            # ]
+            # for sport in sports:
+            #     db.session.add(sport)
             
-            teams = [
-                Team(name='Informática', city='Caxias'),
-                Team(name='Administração', city='Caxias'),
-                Team(name='Agropecuária', city='Caxias'),
-                Team(name='Edificações', city='Caxias')
-            ]
-            for team in teams:
-                db.session.add(team)
+            # teams = [
+            #     Team(name='Informática', city='Caxias'),
+            #     Team(name='Administração', city='Caxias'),
+            #     Team(name='Agropecuária', city='Caxias'),
+            #     Team(name='Edificações', city='Caxias')
+            # ]
+            # for team in teams:
+            #     db.session.add(team)
             
-            # Criar usuário administrador padrão
+            # # Criar usuário administrador padrão
             admin_user = User(
                 username='admin',
                 email='admin@jifma.com',
