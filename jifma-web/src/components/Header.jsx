@@ -12,8 +12,8 @@ const Header = () => {
     { name: 'Resultados', href: '/resultados', icon: BarChart3 },
     { name: 'Medalhas', href: '/medalhas', icon: Medal },
     { name: 'Tabela', href: '/tabela', icon: Calendar },
-    { name: 'Estatísticas', href: '/estatisticas', icon: TrendingUp },
-    { name: 'Admin', href: '/admin', icon: Settings },
+    // { name: 'Estatísticas', href: '/estatisticas', icon: TrendingUp },
+    // { name: 'Admin', href: '/admin', icon: Settings },
   ]
 
   return (
