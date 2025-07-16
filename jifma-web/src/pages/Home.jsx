@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {Trophy, Calendar, Users, MapPin, ArrowRight, Zap, Target, Award, BarChart3} from 'lucide-react'
 
 const Home = () => {
-    const sports = [
+    const sports = [    
         {name: 'Futsal', icon: '⚽', color: 'from-green-400 to-green-600'},
         {name: 'Futebol de Campo', icon: '🏈', color: 'from-blue-400 to-blue-600'},
         {name: 'Vôlei de Praia', icon: '🏐', color: 'from-yellow-400 to-orange-500'},

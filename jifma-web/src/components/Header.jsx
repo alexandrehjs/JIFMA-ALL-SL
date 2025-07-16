@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Trophy, Calendar, Medal, Newspaper, BarChart3, Settings, TrendingUp } from 'lucide-react'
+import Logo from "../assets/bira_logo_center.svg"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -22,7 +23,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <Trophy className="h-8 w-8 text-blue-600" />
+            <img src={Logo} width={60}/>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">JIFMA</h1>
               <p className="text-xs text-gray-600">Campus Caxias</p>
