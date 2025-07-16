@@ -23,7 +23,7 @@ const Home = () => {
         <div className="min-h-screen">
             {/* Hero Section */}
             <section
-                className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-20 relative overflow-hidden">
+                className="bg-gradient-to-br from-green-600 via-gree-700 to-green-800 text-white py-20 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black opacity-10"></div>
                 <div className="absolute inset-0">
                     <div
@@ -133,27 +133,27 @@ const Home = () => {
             </section>
 
             {/* Call to Action */}
-            <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+            <section className="py-16 bg-gradient-to-r from-green-600 to-green-600 text-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center">
                         <Zap className="h-16 w-16 mx-auto mb-6 text-yellow-400"/>
                         <h2 className="text-3xl md:text-4xl font-bold mb-6">
                             Acompanhe Todos os Resultados
                         </h2>
-                        <p className="text-xl mb-8 text-blue-100">
+                        <p className="text-xl mb-8 text-green-100">
                             Fique por dentro de tudo que acontece no JIFMA Polo 3 2025
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                             <Link
                                 to="/resultados"
-                                className="inline-flex items-center space-x-2 bg-white text-blue-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+                                className="inline-flex items-center space-x-2 bg-white text-green-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
                             >
                                 <BarChart3 size={20}/>
                                 <span>Ver Resultados</span>
                             </Link>
                             <Link
                                 to="/medalhas"
-                                className="inline-flex items-center space-x-2 bg-yellow-500 text-blue-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
+                                className="inline-flex items-center space-x-2 bg-yellow-500 text-green-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105"
                             >
                                 <Award size={20}/>
                                 <span>Quadro de Medalhas</span>
