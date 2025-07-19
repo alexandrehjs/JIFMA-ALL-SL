@@ -121,7 +121,7 @@ const Home = () => {
               </a>
               <a
                 className="text-xl text-blue-500 hover:underline"
-                href="https://caxias.ifma.edu.br/wp-content/uploads/sites/27/2025/05/REGULAMENTO-GERAL-POLO-3-JIFMA-2025.pdf"
+                href="https://caxias.ifma.edu.br/wp-content/uploads/sites/27/2025/06/REGULAMENTOS-ESPECIFICOS-JIFMA-COMPLETO-E-ATUALIZADO.pdf"
               >
                 Regulamento das Modalidades da Etapa Polo 3
               </a>
