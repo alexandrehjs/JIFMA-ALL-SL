@@ -8,6 +8,7 @@ import Medals from './pages/Medals'
 import Schedule from './pages/Schedule'
 import Statistics from './pages/Statistics'
 import Admin from './pages/Admin'
+import Sobre from './pages/About'
 import './App.css'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/tabela" element={<Schedule />} />
             <Route path="/estatisticas" element={<Statistics />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/sobre" element={<Sobre />} />
           </Routes>
         </main>
       </div>
