@@ -30,10 +30,9 @@ def create_app():
     
     # Configuration
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///jifma.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL', 'sqlite:///jifma.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-secret-string-change-in-production')
-    
     # Initialize extensions
     db.init_app(app)
     CORS(app, origins="*")
@@ -57,33 +56,33 @@ def create_app():
         
         # Initialize default data if tables are empty
         if Sport.query.count() == 0:
-            sports = [
-                Sport(name='Futsal', description='Modalidade de futebol indoor'),
-                Sport(name='Futebol de Campo', description='Futebol tradicional em campo aberto'),
-                Sport(name='Vôlei de Praia', description='Voleibol na areia'),
-                Sport(name='Vôlei de Quadra', description='Voleibol em quadra coberta'),
-                Sport(name='Handebol', description='Esporte coletivo com as mãos'),
-                Sport(name='Basquete', description='Basquetebol em quadra')
-            ]
-            for sport in sports:
-                db.session.add(sport)
+            # sports = [
+            #     Sport(name='Futsal', description='Modalidade de futebol indoor'),
+            #     Sport(name='Futebol de Campo', description='Futebol tradicional em campo aberto'),
+            #     Sport(name='Vôlei de Praia', description='Voleibol na areia'),
+            #     Sport(name='Vôlei de Quadra', description='Voleibol em quadra coberta'),
+            #     Sport(name='Handebol', description='Esporte coletivo com as mãos'),
+            #     Sport(name='Basquete', description='Basquetebol em quadra')
+            # ]
+            # for sport in sports:
+            #     db.session.add(sport)
             
-            teams = [
-                Team(name='Informática', city='Caxias'),
-                Team(name='Administração', city='Caxias'),
-                Team(name='Agropecuária', city='Caxias'),
-                Team(name='Edificações', city='Caxias')
-            ]
-            for team in teams:
-                db.session.add(team)
+            # teams = [
+            #     Team(name='Informática', city='Caxias'),
+            #     Team(name='Administração', city='Caxias'),
+            #     Team(name='Agropecuária', city='Caxias'),
+            #     Team(name='Edificações', city='Caxias')
+            # ]
+            # for team in teams:
+            #     db.session.add(team)
             
-            # Criar usuário administrador padrão
+            # # Criar usuário administrador padrão
             admin_user = User(
                 username='admin',
                 email='admin@jifma.com',
                 is_admin=True
             )
-            admin_user.set_password('admin123')
+            admin_user.set_password('admin@123')
             db.session.add(admin_user)
             
             db.session.commit()
@@ -121,6 +120,10 @@ def create_app():
         return {'status': 'healthy', 'message': 'API is running'}
     
     return app
+
+    @app.route('/')
+    def hello_world():
+        return 'Hello, Vercel!'
 
 app = create_app()
 

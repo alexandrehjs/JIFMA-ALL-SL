@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Medal, Trophy, Award, Crown } from 'lucide-react'
 import axios from 'axios'
+import api from '@/config/api'
 
 const Medals = () => {
   const [standings, setStandings] = useState([])
@@ -14,7 +15,7 @@ const Medals = () => {
   const fetchMedals = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('http://localhost:5000/api/medals')
+      const response = await axios.get(`${api.baseURL}/api/medals`)
       setStandings(response.data)
       setError('')
     } catch (error) {
