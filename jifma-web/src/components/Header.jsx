@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Trophy, Calendar, Info, Medal, Newspaper, BarChart3, Settings, TrendingUp } from 'lucide-react'
-import Logo from "../assets/bira_logo_center.svg"
+// import Logo from "../assets/bira_logo_center.svg"
+import Logo from "../assets/jifma-logo.svg"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -27,7 +28,7 @@ const Header = () => {
             <img src={Logo} width={60}/>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">JIFMA</h1>
-              <p className="text-xs text-gray-600">Campus Caxias</p>
+              <p className="text-xs text-gray-600">Etapa Estadual</p>
             </div>
           </Link>
 

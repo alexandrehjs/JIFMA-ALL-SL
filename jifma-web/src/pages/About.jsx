@@ -61,7 +61,7 @@ const Home = () => {
       </section>
 
       {/* Modalidades */}
-      <section className="py-16 bg-gray-50">
+      {/* <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -84,7 +84,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,7 +94,7 @@ const Home = () => {
             </h2>
             <p className="text-xl text-gray-600">
               Em breve apresentaremos a nossa equipe e infraestrutura
-              responsáveis pelo JIFMA Polo 3
+              responsáveis pelo JIFMA Etapa Estadual 2025
             </p>
           </div>
         </div>
@@ -115,16 +115,16 @@ const Home = () => {
             <div className="flex flex-row w-full justify-center mt-8 space-x-10">
               <a
                 className="text-xl text-blue-500 hover:underline"
-                href="https://caxias.ifma.edu.br/wp-content/uploads/sites/27/2025/05/REGULAMENTO-GERAL-POLO-3-JIFMA-2025.pdf"
+                href="https://portal.ifma.edu.br/concursos-e-seletivos/?d=KyMzdWRdMEtRIkMmUENcRX5oc0B6RHxGZFdEQUNHVXNTRVBBUkFET1JASUZNQTdiZDZhODY0MGMyODcwMzk0YTA3YjE0MzIxZjk2MFt8XTAwMV9Qcm9ncmFtYV9JbnN0aXR1Y2lvbmFsX1JFSVRfUkVHVUxBTUVOVE9fSklGTUFfMjAyNS5wZGY="
               >
-                Regulamento Geral da Etapa Polo 3
+                Regulamento Geral da Etapa Estadual 2025
               </a>
-              <a
+              {/* <a
                 className="text-xl text-blue-500 hover:underline"
                 href="https://caxias.ifma.edu.br/wp-content/uploads/sites/27/2025/06/REGULAMENTOS-ESPECIFICOS-JIFMA-COMPLETO-E-ATUALIZADO.pdf"
               >
                 Regulamento das Modalidades da Etapa Polo 3
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

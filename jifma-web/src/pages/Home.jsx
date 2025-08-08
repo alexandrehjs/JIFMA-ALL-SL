@@ -63,25 +63,25 @@ const Home = () => {
               <Trophy className="h-16 w-16 mx-auto mb-6 text-yellow-400" />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-              JIFMA Polo 3 2025
+              JIFMA Etapa Estadual 2025
             </h1>
 
             <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              Jogos Internos do IFMA Polo 3
+              Jogos Internos do IFMA Etapa Estadual
             </p>
 
             <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 text-lg mb-8">
               <div className="flex items-center space-x-2">
                 <Calendar className="h-5 w-5" />
-                <span>Julho 2025</span>
+                <span>Agosto 2025</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5" />
-                <span>Campus Caxias</span>
+                <span>São Luis</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-5 w-5" />
-                <span>6 Modalidades</span>
+                <span>11 Modalidades</span>
               </div>
             </div>
 
@@ -177,7 +177,7 @@ const Home = () => {
               Acompanhe Todos os Resultados
             </h2>
             <p className="text-xl mb-8 text-green-100">
-              Fique por dentro de tudo que acontece no JIFMA Polo 3 2025
+              Fique por dentro de tudo que acontece no JIFMA Etapa Estadual 2025
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
               <Link
