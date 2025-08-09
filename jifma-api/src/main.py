@@ -1,11 +1,14 @@
 import os
 import sys
+from functools import wraps
+from datetime import timedelta
+
 # DON'T CHANGE THIS LINE
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, get_jwt, verify_jwt_in_request
 from models.user import db, User
 from models.news import News
 from models.sports import Sport
@@ -32,11 +35,29 @@ def create_app():
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL', 'sqlite:///jifma.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-secret-string-change-in-production')
+    app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'super-secret-key-change-in-production')
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)  # 7 dias para expirar o token
+    
     # Initialize extensions
     db.init_app(app)
     CORS(app, origins="*")
     jwt = JWTManager(app)
+    
+    # Custom decorator for admin verification
+    def admin_required():
+        def wrapper(fn):
+            @wraps(fn)
+            def decorator(*args, **kwargs):
+                verify_jwt_in_request()
+                claims = get_jwt()
+                if not claims.get('is_admin', False):
+                    return jsonify({'message': 'Acesso negado: requer privilégios de admin'}), 403
+                return fn(*args, **kwargs)
+            return decorator
+        return wrapper
+    
+    # Make the decorator available to all blueprints
+    app.admin_required = admin_required
     
     # Register blueprints
     app.register_blueprint(user_bp, url_prefix='/api')
@@ -50,33 +71,55 @@ def create_app():
     app.register_blueprint(admin_games_bp, url_prefix='/api')
     app.register_blueprint(admin_teams_bp, url_prefix='/api')
     
+    # JWT callbacks for custom responses
+    @jwt.expired_token_loader
+    def expired_token_callback(jwt_header, jwt_payload):
+        return jsonify({
+            'message': 'Token expirado',
+            'error': 'token_expired'
+        }), 401
+
+    @jwt.invalid_token_loader
+    def invalid_token_callback(error):
+        return jsonify({
+            'message': 'Token inválido',
+            'error': 'invalid_token'
+        }), 401
+
+    @jwt.unauthorized_loader
+    def missing_token_callback(error):
+        return jsonify({
+            'message': 'Token de acesso não encontrado',
+            'error': 'authorization_required'
+        }), 401
+    
     # Create tables
     with app.app_context():
         db.create_all()
         
         # Initialize default data if tables are empty
         if Sport.query.count() == 0:
-            # sports = [
-            #     Sport(name='Futsal', description='Modalidade de futebol indoor'),
-            #     Sport(name='Futebol de Campo', description='Futebol tradicional em campo aberto'),
-            #     Sport(name='Vôlei de Praia', description='Voleibol na areia'),
-            #     Sport(name='Vôlei de Quadra', description='Voleibol em quadra coberta'),
-            #     Sport(name='Handebol', description='Esporte coletivo com as mãos'),
-            #     Sport(name='Basquete', description='Basquetebol em quadra')
-            # ]
-            # for sport in sports:
-            #     db.session.add(sport)
+            sports = [
+                Sport(name='Futsal', description='Modalidade de futebol indoor'),
+                Sport(name='Futebol de Campo', description='Futebol tradicional em campo aberto'),
+                Sport(name='Vôlei de Praia', description='Voleibol na areia'),
+                Sport(name='Vôlei de Quadra', description='Voleibol em quadra coberta'),
+                Sport(name='Handebol', description='Esporte coletivo com as mãos'),
+                Sport(name='Basquete', description='Basquetebol em quadra')
+            ]
+            for sport in sports:
+                db.session.add(sport)
             
-            # teams = [
-            #     Team(name='Informática', city='Caxias'),
-            #     Team(name='Administração', city='Caxias'),
-            #     Team(name='Agropecuária', city='Caxias'),
-            #     Team(name='Edificações', city='Caxias')
-            # ]
-            # for team in teams:
-            #     db.session.add(team)
+            teams = [
+                Team(name='Informática', city='Caxias'),
+                Team(name='Administração', city='Caxias'),
+                Team(name='Agropecuária', city='Caxias'),
+                Team(name='Edificações', city='Caxias')
+            ]
+            for team in teams:
+                db.session.add(team)
             
-            # # Criar usuário administrador padrão
+            # Criar usuário administrador padrão
             admin_user = User(
                 username='admin',
                 email='admin@jifma.com',
@@ -121,13 +164,8 @@ def create_app():
     
     return app
 
-    @app.route('/')
-    def hello_world():
-        return 'Hello, Vercel!'
-
 app = create_app()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False, use_reloader=True)
-
