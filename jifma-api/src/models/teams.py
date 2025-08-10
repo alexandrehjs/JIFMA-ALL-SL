@@ -8,7 +8,7 @@ class Team(db.Model):
     name = db.Column(db.String(100), nullable=False)
     logo_url = db.Column(db.String(500), nullable=True)
     city = db.Column(db.String(100), nullable=True)
-    
+
     def to_dict(self):
         return {
             'team_id': self.team_id,
@@ -17,3 +17,10 @@ class Team(db.Model):
             'city': self.city
         }
 
+# Função utilitária fora da classe
+def is_valid_uuid(val):
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False

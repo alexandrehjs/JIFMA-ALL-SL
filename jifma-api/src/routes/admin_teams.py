@@ -1,52 +1,57 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy import or_
+from models.sports import Sport
 from models.user import db, User
 from models.teams import Team
-from models.sports import Sport
+from models.games import Game 
+import uuid
 
 admin_teams_bp = Blueprint('admin_teams', __name__)
 
 def require_admin():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    if not user or not user.is_admin:
-        return False
-    return True
+    return user and user.is_admin
 
-# ROTAS PARA EQUIPES
-@admin_teams_bp.route('/admin/teams', methods=['POST'])
+def is_valid_uuid(val):
+    try:
+        uuid.UUID(str(val))
+        return True
+    except ValueError:
+        return False
+
+@admin_teams_bp.route('/admin/teams/<team_id>', methods=['DELETE'])
 @jwt_required()
-def create_team():
+def delete_team(team_id):
     try:
         if not require_admin():
             return jsonify({'error': 'Acesso negado. Apenas administradores.'}), 403
-        
-        data = request.get_json()
-        name = data.get('name')
-        logo_url = data.get('logo_url')
-        city = data.get('city')
-        
-        if not name:
-            return jsonify({'error': 'Nome da equipe é obrigatório'}), 400
-        
-        # Verificar se equipe já existe
-        if Team.query.filter_by(name=name).first():
-            return jsonify({'error': 'Equipe com este nome já existe'}), 400
-        
-        team = Team(
-            name=name,
-            logo_url=logo_url,
-            city=city
-        )
-        
-        db.session.add(team)
+
+        if not is_valid_uuid(team_id):
+            return jsonify({'error': 'ID inválido.'}), 400
+
+        team = Team.query.get(team_id)
+        if not team:
+            return jsonify({'error': 'Equipe não encontrada.'}), 404
+
+        # Verifica se há jogos vinculados a essa equipe
+        jogos_vinculados = Game.query.filter(
+            or_(
+                Game.team_a_id == team_id,
+                Game.team_b_id == team_id,
+                Game.winner_team_id == team_id
+            )
+        ).first()
+
+        if jogos_vinculados:
+            return jsonify({'error': 'Não é possível excluir esta equipe pois existem jogos ou estatísticas vinculadas a ela.'}), 400
+
+        db.session.delete(team)
         db.session.commit()
-        
-        return jsonify({
-            'message': 'Equipe criada com sucesso',
-            'team': team.to_dict()
-        }), 201
-        
+
+        return jsonify({'message': 'Equipe excluída com sucesso'}), 200
+
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
@@ -83,26 +88,6 @@ def update_team(team_id):
             'message': 'Equipe atualizada com sucesso',
             'team': team.to_dict()
         }), 200
-        
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
-
-@admin_teams_bp.route('/admin/teams/<team_id>', methods=['DELETE'])
-@jwt_required()
-def delete_team(team_id):
-    try:
-        if not require_admin():
-            return jsonify({'error': 'Acesso negado. Apenas administradores.'}), 403
-        
-        team = Team.query.get(team_id)
-        if not team:
-            return jsonify({'error': 'Equipe não encontrada'}), 404
-        
-        db.session.delete(team)
-        db.session.commit()
-        
-        return jsonify({'message': 'Equipe excluída com sucesso'}), 200
         
     except Exception as e:
         db.session.rollback()

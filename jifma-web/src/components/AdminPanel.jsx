@@ -215,44 +215,56 @@ const AdminPanel = ({ onLogout }) => {
   };
 
   const handleDelete = async (type, id) => {
-    if (!confirm("Tem certeza que deseja excluir este item?")) return;
+  if (!confirm("Tem certeza que deseja excluir este item?")) return;
 
-    setLoading(true);
-    try {
-      const token = localStorage.getItem("jifma_token");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
+  setLoading(true);
+  try {
+    const token = localStorage.getItem("jifma_token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
 
-      let endpoint = "";
-      switch (type) {
-        case "news":
-          endpoint = `/api/admin/news/${id}`;
-          break;
-        case "game":
-          endpoint = `/api/admin/games/${id}`;
-          break;
-        case "team":
-          endpoint = `/api/admin/teams/${id}`;
-          break;
-        case "sport":
-          endpoint = `/api/admin/sports/${id}`;
-          break;
-        case "medal":
-          endpoint = `/api/admin/medals/${id}`;
-          break;
-      }
-
-      await axios.delete(`${api.baseURL}${endpoint}`, config);
-      showMessage("Item excluído com sucesso!");
-      loadData();
-    } catch (error) {
-      console.error("Erro ao excluir:", error);
-      showMessage("Erro ao excluir item", "error");
-    } finally {
-      setLoading(false);
+    let endpoint = "";
+    switch (type) {
+      case "news":
+        endpoint = `/api/admin/news/${id}`;
+        break;
+      case "game":
+        endpoint = `/api/admin/games/${id}`;
+        break;
+      case "team":
+        endpoint = `/api/admin/teams/${id}`;
+        break;
+      case "sport":
+        endpoint = `/api/admin/sports/${id}`;
+        break;
+      case "medal":
+        endpoint = `/api/admin/medals/${id}`;
+        break;
     }
-  };
+
+    const response = await axios.delete(`${api.baseURL}${endpoint}`, config);
+    
+    showMessage("Item excluído com sucesso!");
+    loadData();
+  } catch (error) {
+    console.error("Erro detalhado:", error.response?.data || error.message);
+    
+    if (error.response?.data?.error?.includes("Dependency rule")) {
+      showMessage(
+        "Não é possível excluir esta equipe pois existem jogos ou estatísticas vinculadas a ela.",
+        "error"
+      );
+    } else {
+      showMessage(
+        `Erro ao excluir item: ${error.response?.data?.error || error.message}`,
+        "error"
+      );
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   const renderDashboard = () => (
     <div className="space-y-6">
