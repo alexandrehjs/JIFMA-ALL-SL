@@ -147,17 +147,19 @@ const Home = () => {
             <div className="flex flex-row w-full justify-center mt-8 space-x-10">
               <a
                 className="text-xl text-blue-500 hover:underline"
-                href="../../public/boletins/boletim-02.pdf"
+                href="../../public/boletins/boletim-01.pdf"
                 target="_blank"
               >
                 Boletim 01
               </a>
-              {/* <a
+
+              <a
                 className="text-xl text-blue-500 hover:underline"
-                href="https://caxias.ifma.edu.br/wp-content/uploads/sites/27/2025/06/REGULAMENTOS-ESPECIFICOS-JIFMA-COMPLETO-E-ATUALIZADO.pdf"
+                href="../../public/boletins/boletim-02.pdf"
+                target="_blank"
               >
-                Regulamento das Modalidades da Etapa Polo 3
-              </a> */}
+                Boletim 02
+              </a>
             </div>
 
             
