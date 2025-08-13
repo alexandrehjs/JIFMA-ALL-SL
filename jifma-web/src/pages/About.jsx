@@ -126,9 +126,45 @@ const Home = () => {
                 Regulamento das Modalidades da Etapa Polo 3
               </a> */}
             </div>
+
+            
           </div>
         </div>
       </section>
+      
+      
+      {/* new newsletter section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Boletins
+            </h2>
+            <p className="text-xl text-gray-600">
+              Boletins informativos dos jogos da Etapa Estadual do JIFMA 2025
+            </p>
+
+            <div className="flex flex-row w-full justify-center mt-8 space-x-10">
+              <a
+                className="text-xl text-blue-500 hover:underline"
+                href="../../public/boletins/boletim-02.pdf"
+                target="_blank"
+              >
+                Boletim 01
+              </a>
+              {/* <a
+                className="text-xl text-blue-500 hover:underline"
+                href="https://caxias.ifma.edu.br/wp-content/uploads/sites/27/2025/06/REGULAMENTOS-ESPECIFICOS-JIFMA-COMPLETO-E-ATUALIZADO.pdf"
+              >
+                Regulamento das Modalidades da Etapa Polo 3
+              </a> */}
+            </div>
+
+            
+          </div>
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="py-16 bg-gradient-to-r from-green-600 to-green-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
