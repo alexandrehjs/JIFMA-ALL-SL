@@ -36,7 +36,7 @@ const Home = () => {
               <h1 className="text-4xl md:text-6xl font-bold mb-4 animate-fade-in flex flex-col">
                 JIFMA 2025
               </h1>
-              <span className="text-4xl">Polo 3</span>
+              <span className="text-4xl">Etapa Estadual</span>
             </div>
 
             <p className="text-md md:text-xl mb-8 text-white">
