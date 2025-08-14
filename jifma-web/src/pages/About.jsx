@@ -116,6 +116,7 @@ const Home = () => {
               <a
                 className="text-xl text-blue-500 hover:underline"
                 href="https://portal.ifma.edu.br/concursos-e-seletivos/?d=KyMzdWRdMEtRIkMmUENcRX5oc0B6RHxGZFdEQUNHVXNTRVBBUkFET1JASUZNQTdiZDZhODY0MGMyODcwMzk0YTA3YjE0MzIxZjk2MFt8XTAwMV9Qcm9ncmFtYV9JbnN0aXR1Y2lvbmFsX1JFSVRfUkVHVUxBTUVOVE9fSklGTUFfMjAyNS5wZGY="
+                target="_blank"
               >
                 Regulamento Geral da Etapa Estadual 2025
               </a>
@@ -159,6 +160,14 @@ const Home = () => {
                 target="_blank"
               >
                 Boletim 02
+              </a>
+
+              <a
+                className="text-xl text-blue-500 hover:underline"
+                href="../../public/boletins/boletim-03.pdf"
+                target="_blank"
+              >
+                Boletim 03
               </a>
             </div>
 
