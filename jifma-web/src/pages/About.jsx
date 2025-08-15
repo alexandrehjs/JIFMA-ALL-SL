@@ -169,6 +169,22 @@ const Home = () => {
               >
                 Boletim 03
               </a>
+              
+              <a
+                className="text-xl text-blue-500 hover:underline"
+                href="../../public/boletins/boletim-04.pdf"
+                target="_blank"
+              >
+                Boletim 04
+              </a>
+
+              <a
+                className="text-xl text-blue-500 hover:underline"
+                href="../../public/boletins/boletim-final.pdf"
+                target="_blank"
+              >
+                Boletim Final
+              </a>
             </div>
 
             
